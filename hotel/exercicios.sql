@@ -1,23 +1,23 @@
 use aluno_105289_hoteldb;
 
-# 11
-#
+-- 11
+--
 select
     hotel.Designacao, count(DISTINCT f.Numero_Factura) as c
 from hotel
     left join reserva_quartos as rq on hotel.Sigla_Hotel = rq.Sigla_Hotel
     left join factura as f on rq.Numero_Reserva = f.Numero_Reserva
 GROUP BY hotel.Designacao order by c DESC;
-# 15
-# Para cada nome de uma organização, indicar o total de reservas existentes nessa organização
+-- 15
+-- Para cada nome de uma organização, indicar o total de reservas existentes nessa organização
 select
     c.Nome_Cliente, count(r.Numero_Reserva)
 from cliente c
     right join organizacao o on c.Numero_Cliente = o.Numero_Cliente
     left join reserva r on c.Numero_Cliente = r.Numero_Cliente
 group by c.Nome_Cliente;
-# 16
-# Para cada designação de uma organização, indicar o total de reservas existentes por hotel
+-- 16
+-- Para cada designação de uma organização, indicar o total de reservas existentes por hotel
 select
     subC.Nome_cliente, rq.sigla_hotel, count(rq.Numero_Reserva) as total
 from reserva r
