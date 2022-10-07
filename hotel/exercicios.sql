@@ -11,11 +11,11 @@ GROUP BY hotel.Designacao order by c DESC;
 -- 15
 -- Para cada nome de uma organização, indicar o total de reservas existentes nessa organização
 select
-    c.Nome_Cliente, count(r.Numero_Reserva)
-from cliente c
-    right join organizacao o on c.Numero_Cliente = o.Numero_Cliente
-    left join reserva r on c.Numero_Cliente = r.Numero_Cliente
-group by c.Nome_Cliente;
+    c.Nome_Cliente, count(r.Numero_Reserva) as Total_Reservas
+from organizacao o
+    left join cliente c on o.Numero_Cliente = c.Numero_Cliente
+    left join reserva r on o.Numero_Cliente = r.Numero_Cliente
+group by c.Numero_Cliente;
 -- 16
 -- Para cada designação de uma organização, indicar o total de reservas existentes por hotel
 select
