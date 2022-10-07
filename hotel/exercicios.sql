@@ -76,6 +76,25 @@ from factura f
     left join reserva_quartos rq on f.Numero_Reserva = rq.Numero_Reserva
     right join hotel h on rq.Sigla_Hotel = h.Sigla_Hotel
 group by h.Sigla_Hotel;
+
+-- 13
+-- Listar, para cada designação de hotel, o total de quartos
+select h.Designacao, count(distinct q.Numero_Quarto)
+from hotel h
+    left join quarto q on h.Sigla_Hotel = q.Sigla_Hotel
+group by h.Designacao;
+
+-- 14 TODO ver se ha forma melhor de fazer
+-- Listar as designações dos hotéis com maior número de quartos
+select @maxx := max(sq.quartos) from
+(select count(distinct q.Numero_Quarto) quartos
+    from hotel h
+        left join quarto q on h.Sigla_Hotel = q.Sigla_Hotel
+    group by h.Designacao) sq;
+select h.Designacao from hotel h left join quarto q on h.Sigla_Hotel = q.Sigla_Hotel
+group by h.Designacao
+having count(distinct q.Numero_Quarto) = @maxx;
+
 -- 15
 -- Para cada nome de uma organização, indicar o total de reservas existentes nessa organização
 select
@@ -84,6 +103,7 @@ from organizacao o
     left join cliente c on o.Numero_Cliente = c.Numero_Cliente
     left join reserva r on o.Numero_Cliente = r.Numero_Cliente
 group by c.Numero_Cliente;
+
 -- 16
 -- Para cada designação de uma organização, indicar o total de reservas existentes por hotel
 select
@@ -94,3 +114,18 @@ from reserva r
         subC on r.Numero_Cliente = subC.Numero_Cliente
     left join reserva_quartos rq on r.Numero_Reserva = rq.Numero_Reserva
 group by subC.Nome_cliente, rq.sigla_hotel;
+
+-- 17 TODO perceber o q diz
+-- Listar as designações dos hotéis com maior número de quartos livres (sem Reservas).
+
+select @maxx := max(sq.quartos) from
+(select count(distinct q.Numero_Quarto) quartos
+    from hotel h
+        left join quarto q on h.Sigla_Hotel = q.Sigla_Hotel
+    group by h.Designacao) sq;
+select *, count(distinct q.Numero_Quarto)
+from hotel h
+    left join quarto q on h.Sigla_Hotel = q.Sigla_Hotel
+    left join reserva_quartos rq on q.Sigla_Hotel = rq.Sigla_Hotel and q.Numero_Quarto = rq.Numero_Quarto
+group by h.Designacao
+
