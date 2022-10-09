@@ -50,8 +50,8 @@ select distinct h.Designacao from reserva r
     left join reserva_quartos rq on r.Numero_Reserva = rq.Numero_Reserva
     left join hotel h on rq.Sigla_Hotel = h.Sigla_Hotel
 where
-    (r.Dia_Entrada between '2012-8-1' and '2012-10-1')
- or (r.Dia_Saida between '2012-8-1' and '2012-10-1');
+    (r.Dia_Entrada between date'2012-8-1' and date'2012-10-1')
+ or (r.Dia_Saida between date'2012-8-1' and date'2012-10-1');
 
 -- 10
 -- Quais os números de reserva efectuados pela ONU e pela Ana?
