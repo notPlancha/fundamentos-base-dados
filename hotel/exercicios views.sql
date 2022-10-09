@@ -16,7 +16,7 @@ create view ReservasNaoFacturadasPosCheckOut as
 select * from ReservasNaoFacturadasPosCheckOut;
 -- 3
 -- Nomes de Organizações que devem dinheiro
-alter view OrganizacoesQueDevem as
+create view OrganizacoesQueDevem as
     select rnfpc.*, c.Nome_Cliente
     from ReservasNaoFacturadasPosCheckOut rnfpc
         left join organizacao o on rnfpc.Cliente = o.Numero_Cliente
