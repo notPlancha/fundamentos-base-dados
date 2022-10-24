@@ -16,7 +16,7 @@ create view ReservasNaoFacturadasPosCheckOut as
 select * from ReservasNaoFacturadasPosCheckOut;
 -- 3
 -- Nomes de Organizações que devem dinheiro
-alter view OrganizacoesQueDevem as
+create view OrganizacoesQueDevem as
     select rnfpc.*, c.Nome_Cliente
     from ReservasNaoFacturadasPosCheckOut rnfpc
         left join organizacao o on rnfpc.Cliente = o.Numero_Cliente
@@ -40,7 +40,7 @@ reserva_quartos.Numero_Reserva AND reserva_quartos.Sigla_Hotel=hotel.Sigla_Hotel
 create view hotelCount(nHoteis) as -- preferi criar esta view caso hiuvesse condicoes adicionais (como uma coluna 'funcional'), neste caso n há
     select count(*) from hotel; -- a vantagem de ter esta view separada é que esta view pode ser mudada ao longo do tempo sem alterar a view principal
 
-alter view clienteEmTodos as
+create view clienteEmTodos as
 select cph.Numero_Cliente, cph.Nome_Cliente from ClientePorHotel cph
 group by cph.Numero_Cliente
 having count(*) = (select * from hotelCount);
